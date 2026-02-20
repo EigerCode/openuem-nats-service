@@ -25,6 +25,7 @@ type NATSConfig struct {
 	JetstreamStore string
 	ClusterName    string
 	ClusterPort    string
+	WebSocketPort  string
 	OtherServers   string
 	ServerName     string
 	Debug          bool
@@ -157,6 +158,11 @@ func GenerateNatsConfig() (*NATSConfig, error) {
 	key, err = cfg.Section("NATS").GetKey("NATSOtherServers")
 	if err == nil {
 		data.OtherServers = key.String()
+	}
+
+	key, err = cfg.Section("NATS").GetKey("WebSocketPort")
+	if err == nil {
+		data.WebSocketPort = key.String()
 	}
 
 	key, err = cfg.Section("NATS").GetKey("Debug")
