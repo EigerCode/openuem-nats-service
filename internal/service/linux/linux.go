@@ -111,8 +111,8 @@ func GetFlagsOptions(config *common.NATSConfig) (*server.Options, error) {
 	}
 
 	flagOpts.Routes = []*url.URL{}
-	otherServers := strings.Split(config.OtherServers, ",")
-	for _, server := range otherServers {
+	otherServers := strings.SplitSeq(config.OtherServers, ",")
+	for server := range otherServers {
 		u, err := url.Parse("tls://" + server)
 		if err == nil {
 			flagOpts.Routes = append(flagOpts.Routes, u)
