@@ -67,6 +67,31 @@ func main() {
 		fileOpts.Routes = flagOpts.Routes
 	}
 
+	if config.WebSocketPort != "" {
+		fileOpts.Websocket.Port, err = strconv.Atoi(config.WebSocketPort)
+		if err != nil {
+			log.Println("[FATAL]: web socket port is not valid")
+			return
+		}
+
+		fileOpts.Websocket.TLSMap = true
+
+		tc := &server.TLSConfigOpts{
+			CertFile: config.NATSCertPath,
+			KeyFile:  config.NATSKeyPath,
+			CaFile:   config.NATSCAPath,
+			Verify:   true,
+		}
+		tlsConfig, err := server.GenTLSConfig(tc)
+		if err != nil {
+			log.Fatalf("Can't build TLS Config for WebSocket server: %v", err)
+		}
+
+		fileOpts.Websocket.TLSConfig = tlsConfig
+
+		log.Printf("[INFO]: NATS server is running with WebSockets support in port %d", fileOpts.Websocket.Port)
+	}
+
 	if config.Debug {
 		fileOpts.Debug = true
 		fileOpts.Trace = true
@@ -118,5 +143,6 @@ func GetFlagsOptions(config *common.NATSConfig) (*server.Options, error) {
 			flagOpts.Routes = append(flagOpts.Routes, u)
 		}
 	}
+
 	return &flagOpts, nil
 }

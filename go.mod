@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/nats-io/nats-server/v2 v2.12.1
-	github.com/open-uem/utils v0.0.0-20251221104611-c55d64529212
+	github.com/open-uem/utils v0.0.0-20260305135023-24f298daa053
 	golang.org/x/sys v0.37.0
 )
 
