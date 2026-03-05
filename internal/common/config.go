@@ -160,7 +160,7 @@ func GenerateNatsConfig() (*NATSConfig, error) {
 		data.OtherServers = key.String()
 	}
 
-	key, err = cfg.Section("NATS").GetKey("WebSocketPort")
+	key, err = cfg.Section("NATS").GetKey("NATSWebSocketPort")
 	if err == nil {
 		data.WebSocketPort = key.String()
 	}
